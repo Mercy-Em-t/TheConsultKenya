@@ -26,13 +26,82 @@
         <span class="text-xs text-emerald-400 font-medium">Authority & Advisory Network</span>
       </div>
     </div>
+    
     <div class="flex items-center gap-2">
-      <button onclick="navigateTo('hubs')" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Search Topic Hubs"><i data-lucide="search" class="w-5 h-5"></i></button>
+      <button onclick="navigateTo('hubs')" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Search Topic Hubs">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </button>
+      
       <button onclick="toggleNotifications()" class="relative p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Notifications">
         <i data-lucide="bell" class="w-5 h-5"></i>
-        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
       </button>
-      <div onclick="navigateTo('profile')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-slate-950 cursor-pointer" title="View Profile">DM</div>
+
+      <!-- PROFILE AVATAR WITH INTERACTIVE DROPDOWN MENU -->
+      <div class="relative">
+        <button id="profileDropdownBtn" onclick="toggleProfileDropdown(event)" class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-xs font-extrabold text-slate-950 cursor-pointer hover:ring-2 hover:ring-emerald-400/50 transition shadow-md" title="Account Menu">
+          DM
+        </button>
+
+        <!-- DROPDOWN POPOVER MENU -->
+        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-72 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-800/80">
+          <!-- User Summary Header -->
+          <div class="p-4 bg-slate-950/70 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-sm font-extrabold text-slate-950">DM</div>
+            <div class="min-w-0 flex-1">
+              <h4 class="text-xs font-bold text-white truncate">David Mutiso</h4>
+              <p class="text-[10px] text-slate-400 truncate">david.mutiso@apexfin.co.ke</p>
+              <div class="mt-1 flex items-center gap-1.5">
+                <span id="roleBadge" class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Client Mode</span>
+                <span class="text-[9px] text-slate-400 font-mono">CAS: 880</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Role Switcher -->
+          <div class="p-3 bg-slate-900 flex items-center justify-between">
+            <div class="text-[11px] text-slate-300 font-medium flex items-center gap-1.5">
+              <i data-lucide="repeat" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span id="roleLabelText">Switch Role</span>
+            </div>
+            <button onclick="toggleUserRole()" id="switchRoleBtn" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-bold text-emerald-400 border border-slate-700 transition">
+              Switch to Consultant
+            </button>
+          </div>
+
+          <!-- Quick Navigation Links -->
+          <div class="py-1.5 text-xs">
+            <a href="javascript:void(0)" onclick="navigateTo('profile'); closeProfileDropdown();" class="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition">
+              <i data-lucide="user" class="w-4 h-4 text-slate-400"></i>
+              <span>My Profile & Verified Badges</span>
+            </a>
+            <a href="javascript:void(0)" onclick="navigateTo('studio'); switchStudioTab('published'); closeProfileDropdown();" class="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition">
+              <i data-lucide="folder-check" class="w-4 h-4 text-emerald-400"></i>
+              <span>My Studio Publications & Drafts</span>
+            </a>
+            <a href="javascript:void(0)" onclick="navigateTo('escrow'); closeProfileDropdown();" class="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition">
+              <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+              <span>Escrow Contracts & Vault</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showToast('eTIMS Tax Withholding & VAT Portal'); closeProfileDropdown();" class="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition">
+              <i data-lucide="receipt" class="w-4 h-4 text-cyan-400"></i>
+              <span>KRA eTIMS Tax Invoices</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showToast('ODPC & 2FA Security Settings'); closeProfileDropdown();" class="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-800 text-slate-300 hover:text-white transition">
+              <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
+              <span>Settings & Privacy Controls</span>
+            </a>
+          </div>
+
+          <!-- Sign Out -->
+          <div class="p-2 text-xs">
+            <button onclick="signOutUser()" class="w-full flex items-center gap-2 px-3 py-1.5 rounded-xl text-red-400 hover:bg-red-950/40 hover:text-red-300 transition">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -70,14 +139,18 @@
       <!-- FEED MODE TOGGLE & TOPIC CHIPS -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 self-start">
-          <button id="btnVertical" onclick="switchStreamMode('vertical')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500 text-slate-950 transition flex items-center gap-1.5"><i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Vertical Stream</button>
-          <button id="btnBento" onclick="switchStreamMode('bento')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Bento Portfolio</button>
+          <button id="btnVertical" onclick="switchStreamMode('vertical')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500 text-slate-950 transition flex items-center gap-1.5">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Vertical Stream
+          </button>
+          <button id="btnBento" onclick="switchStreamMode('bento')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Bento Portfolio
+          </button>
         </div>
         <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-          <span onclick="filterTopicTag('KRA eTIMS')" class="px-3 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 font-medium cursor-pointer">#KRAeTIMS</span>
-          <span onclick="filterTopicTag('Fintech Core')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#FintechCore</span>
-          <span onclick="filterTopicTag('Commercial Law')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#CommercialLaw</span>
-          <span onclick="filterTopicTag('Cloud Security')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#CloudSecurity</span>
+          <span onclick="openHubDetail('tax')" class="px-3 py-1 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 font-medium cursor-pointer hover:border-emerald-500 transition">#KRAeTIMS</span>
+          <span onclick="openHubDetail('fintech')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#FintechCore</span>
+          <span onclick="openHubDetail('conveyancing')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#ArdhisasaConveyancing</span>
+          <span onclick="openHubDetail('dataprotection')" class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer">#ODPCDataPrivacy</span>
         </div>
       </div>
 
@@ -107,7 +180,7 @@
               <p class="text-xs text-slate-300 leading-relaxed">How we resolved a KES 40M statutory exposure by redesigning synchronous API calls into a zero-loss asynchronous queue topology with instant QR certification.</p>
             </div>
 
-            <!-- Mermaid Architecture Card -->
+            <!-- Architecture Diagram Card -->
             <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 font-mono text-xs text-slate-300 space-y-2">
               <div class="text-[11px] text-slate-500 flex justify-between items-center border-b border-slate-800 pb-2">
                 <span>SYSTEM ARCHITECTURE TOPOLOGY (VERIFIED SVG)</span>
@@ -198,46 +271,211 @@
     <!-- TAB 2: TOPIC HUBS & SEARCH VIEW -->
     <!-- ======================================================== -->
     <div id="sectionHubs" class="hidden space-y-5">
-      <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3">
-        <h2 class="text-base font-bold text-white flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i> Topic Hubs & Authority Directory
-        </h2>
+      <!-- Search & Title -->
+      <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i> Topic Hubs & Authority Directory
+            </h2>
+            <p class="text-xs text-slate-400">Select a specialized domain to view verified specialists, ongoing technical debates, case studies, and statutory guides.</p>
+          </div>
+          <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 self-start sm:self-auto">4 Active Jurisdictions</span>
+        </div>
         <div class="relative">
-          <input type="text" id="hubSearchInput" onkeyup="searchHubFilter()" placeholder="Search legal, tax, fintech, engineering advisory..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+          <input type="text" id="hubSearchInput" onkeyup="searchHubFilter()" placeholder="Search legal, tax, fintech, engineering, or land registry hubs..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
           <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute right-3.5 top-3.5"></i>
         </div>
       </div>
 
-      <!-- Hub Categories Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="hubList">
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition cursor-pointer space-y-2" onclick="openBookingModal('Adv. Mutua James', '10,000')">
+      <!-- Hub Categories Grid (Cards Open Deep Dedicated Hub View) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="hubList">
+        <!-- Hub 1: Conveyancing -->
+        <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer space-y-3 bento-card" onclick="openHubDetail('conveyancing')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-emerald-400">Commercial Conveyancing</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">18 Advisors</span>
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">Commercial Conveyancing</h3>
+                <span class="text-[10px] text-emerald-400 font-medium">Ardhisasa & Land Registration</span>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-semibold">18 Advisors</span>
           </div>
-          <p class="text-xs text-slate-300">Land registries, Ardhisasa disputes, succession law & sectional title deed compliance.</p>
+          <p class="text-xs text-slate-300 leading-relaxed">Ardhisasa digital titles, Sectional Properties Act conversion, boundary disputes, stamp duty exemptions & succession probate.</p>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>42 Discussions • 15 Briefs</span>
+            <span class="text-emerald-400 font-bold flex items-center gap-1">Open Hub <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
         </div>
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition cursor-pointer space-y-2" onclick="openBookingModal('Dr. Beatrice Muthoni', '12,500')">
+
+        <!-- Hub 2: Corporate Tax -->
+        <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/60 transition cursor-pointer space-y-3 bento-card" onclick="openHubDetail('tax')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-cyan-400">Corporate Tax & eTIMS</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">26 Advisors</span>
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">
+                <i data-lucide="receipt" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">Corporate Tax & eTIMS</h3>
+                <span class="text-[10px] text-cyan-400 font-medium">KRA Audits & Tax Planning</span>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-semibold">26 Advisors</span>
           </div>
-          <p class="text-xs text-slate-300">KRA audit defense, Withholding Tax (WHT) structuring, and transfer pricing reviews.</p>
+          <p class="text-xs text-slate-300 leading-relaxed">eTIMS APIv2 middleware, 5% Withholding Tax structuring, transfer pricing, and Tax Appeals Tribunal dispute defense.</p>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>68 Discussions • 28 Briefs</span>
+            <span class="text-cyan-400 font-bold flex items-center gap-1">Open Hub <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
         </div>
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition cursor-pointer space-y-2" onclick="openBookingModal('Eng. Kamau Otieno', '20,000')">
+
+        <!-- Hub 3: Fintech Rails -->
+        <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-amber-500/60 transition cursor-pointer space-y-3 bento-card" onclick="openHubDetail('fintech')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-400">Fintech Payment Rails</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">14 Advisors</span>
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 font-bold">
+                <i data-lucide="cpu" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">Fintech Payment Rails</h3>
+                <span class="text-[10px] text-amber-400 font-medium">Daraja, CBK & Open Banking</span>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-semibold">14 Advisors</span>
           </div>
-          <p class="text-xs text-slate-300">Safaricom Daraja APIv2 integration, CBK PSP compliance, and ledger reconciliation.</p>
+          <p class="text-xs text-slate-300 leading-relaxed">Safaricom Daraja APIv2 integration, CBK PSP licensing, escrow trust accounts, and double-entry ledger reconciliation.</p>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>31 Discussions • 12 Briefs</span>
+            <span class="text-amber-400 font-bold flex items-center gap-1">Open Hub <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
         </div>
-        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition cursor-pointer space-y-2" onclick="openBookingModal('Fiona Ndinda', '15,000')">
+
+        <!-- Hub 4: Data Protection -->
+        <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-purple-500/60 transition cursor-pointer space-y-3 bento-card" onclick="openHubDetail('dataprotection')">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-purple-400">Data Protection & Privacy</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">12 Advisors</span>
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-white">Data Protection & Privacy</h3>
+                <span class="text-[10px] text-purple-400 font-medium">ODPC Audits & Cloud Cyber</span>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 font-semibold">12 Advisors</span>
           </div>
-          <p class="text-xs text-slate-300">ODPC data controller registration, privacy policy audits, and cross-border data transfer.</p>
+          <p class="text-xs text-slate-300 leading-relaxed">Office of Data Protection Commissioner registration, DPIAs, cross-border health & financial data transfers, and ISO 27001.</p>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span>24 Discussions • 9 Briefs</span>
+            <span class="text-purple-400 font-bold flex items-center gap-1">Open Hub <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- DEDICATED TOPIC HUB DETAIL VIEW / MODAL OVERLAY -->
+    <!-- ======================================================== -->
+    <div id="hubDetailModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md overflow-y-auto p-4 sm:p-6">
+      <div class="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden space-y-5 p-5 sm:p-6">
+        
+        <!-- Hub Modal Header & Back Button -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+          <button onclick="closeHubDetail()" class="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Topic Hubs
+          </button>
+          <div class="flex items-center gap-2">
+            <span id="hubStatBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active Hub</span>
+            <button onclick="closeHubDetail()" class="text-slate-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+          </div>
+        </div>
+
+        <!-- Hub Title & Regulatory Framework Banner -->
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <div id="hubDetailIcon" class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold flex-shrink-0">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 id="hubDetailTitle" class="text-lg sm:text-xl font-extrabold text-white">Commercial Conveyancing & Land Law</h2>
+              <p id="hubDetailDescription" class="text-xs text-slate-300 mt-1">Ardhisasa digital search resolution, Sectional Properties Act 2020 transition, stamp duty structuring, and title verification.</p>
+              <div id="hubDetailFramework" class="mt-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[10px] text-amber-400 font-mono">
+                <i data-lucide="scale" class="w-3 h-3 text-amber-400"></i> Land Registration Act 2012 • Sectional Properties Act 2020 • MoLPP
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-topic tags -->
+          <div id="hubSubtopics" class="flex flex-wrap gap-1.5 text-[11px] pt-1">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- HUB TABS: Advisors, Discussions, Case Studies, Regulatory Guide -->
+        <div class="border-b border-slate-800 flex items-center gap-2 overflow-x-auto text-xs font-semibold">
+          <button id="hubTabBtn-advisors" onclick="switchHubInnerTab('advisors')" class="pb-2.5 border-b-2 border-emerald-500 text-emerald-400 flex items-center gap-1.5 transition">
+            <i data-lucide="users" class="w-4 h-4"></i> Verified Specialists (<span id="hubAdvisorsCount">4</span>)
+          </button>
+          <button id="hubTabBtn-discussions" onclick="switchHubInnerTab('discussions')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i> Technical Q&A (<span id="hubDiscussionsCount">3</span>)
+          </button>
+          <button id="hubTabBtn-studies" onclick="switchHubInnerTab('studies')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
+            <i data-lucide="file-text" class="w-4 h-4"></i> Architectural Case Studies
+          </button>
+          <button id="hubTabBtn-regulatory" onclick="switchHubInnerTab('regulatory')" class="pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
+            <i data-lucide="book-open" class="w-4 h-4"></i> Statutory Compendium
+          </button>
+        </div>
+
+        <!-- TAB 1: ADVISORS DIRECTORY -->
+        <div id="hubInnerView-advisors" class="space-y-3">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span>Certified practitioners with verified statutory authority & escrow ratings</span>
+            <span class="text-emerald-400 font-semibold text-[11px]">Instant 1-Click Booking</span>
+          </div>
+          <div id="hubAdvisorsList" class="space-y-3">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 2: TECHNICAL DISCUSSIONS & Q&A -->
+        <div id="hubInnerView-discussions" class="hidden space-y-4">
+          <!-- Question Post Box -->
+          <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5">
+            <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+              <i data-lucide="help-circle" class="w-4 h-4 text-emerald-400"></i> Ask a Question to Verified Specialists
+            </h4>
+            <div class="flex gap-2">
+              <input type="text" id="newQuestionInput" placeholder="e.g. How to overcome Ardhisasa title search timeout in Kiambu registry?" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500" />
+              <button onclick="postHubQuestion()" class="px-4 py-2 bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl hover:bg-emerald-400 transition flex items-center gap-1">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i> Post
+              </button>
+            </div>
+          </div>
+
+          <!-- Discussions List -->
+          <div id="hubDiscussionsList" class="space-y-3">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 3: CURATED ARCHITECTURAL CASE STUDIES -->
+        <div id="hubInnerView-studies" class="hidden space-y-3">
+          <div id="hubCaseStudiesList" class="space-y-3">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 4: STATUTORY & REGULATORY COMPENDIUM -->
+        <div id="hubInnerView-regulatory" class="hidden space-y-4">
+          <div id="hubRegulatoryContent" class="space-y-3 text-xs">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -245,28 +483,54 @@
     <!-- TAB 3: CREATION STUDIO VIEW -->
     <!-- ======================================================== -->
     <div id="sectionStudio" class="hidden space-y-5">
+      
+      <!-- Studio Header with Tabs (Compose vs My Published Case Studies) -->
       <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <i data-lucide="plus-circle" class="w-5 h-5 text-emerald-400"></i> Creation Studio (PROG-02)
             </h2>
-            <p class="text-xs text-slate-400">Compose verified case studies with live Markdown and Mermaid diagrams.</p>
+            <p class="text-xs text-slate-400">Author high-authority case studies with verified code, diagrams, and KRA/ODPC evidence.</p>
           </div>
-          <button onclick="publishStudioBrief()" class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400 transition">
-            Publish to Network
-          </button>
+          <!-- Studio Sub-Tab Switcher -->
+          <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto text-xs">
+            <button id="studioTabBtn-compose" onclick="switchStudioTab('compose')" class="px-3.5 py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition flex items-center gap-1.5">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Compose Brief
+            </button>
+            <button id="studioTabBtn-published" onclick="switchStudioTab('published')" class="px-3.5 py-1.5 rounded-lg font-bold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+              <i data-lucide="folder-check" class="w-3.5 h-3.5"></i> My Published Decks (<span id="studioPublishedBadgeCount">2</span>)
+            </button>
+          </div>
         </div>
 
-        <div class="space-y-3 text-xs">
-          <div>
-            <label class="block text-slate-300 font-semibold mb-1">Case Study Title</label>
-            <input type="text" id="studioTitle" value="High-Throughput Escrow Ledger Reconciliation on AWS ECS" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 focus:outline-none focus:border-emerald-500" />
-          </div>
+        <!-- VIEW A: COMPOSE BRIEF -->
+        <div id="studioComposeView" class="space-y-4">
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Case Study Title</label>
+              <input type="text" id="studioTitle" value="High-Throughput Escrow Ledger Reconciliation on AWS ECS" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 focus:outline-none focus:border-emerald-500" />
+            </div>
 
-          <div>
-            <label class="block text-slate-300 font-semibold mb-1">Markdown Body & Architecture Syntax</label>
-            <textarea id="studioMarkdown" rows="6" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-200 font-mono text-[11px] focus:outline-none focus:border-emerald-500">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-300 font-semibold mb-1">Topic Hub Jurisdiction</label>
+                <select id="studioHubSelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-300 focus:outline-none focus:border-emerald-500">
+                  <option value="fintech">Fintech Payment Rails (CBK & Safaricom)</option>
+                  <option value="tax">Corporate Tax & eTIMS (KRA)</option>
+                  <option value="conveyancing">Commercial Conveyancing (Ardhisasa)</option>
+                  <option value="dataprotection">Data Protection & Privacy (ODPC)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-300 font-semibold mb-1">Advisory Rate (KES / 45-min)</label>
+                <input type="number" id="studioRate" value="15000" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-300 font-mono" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Markdown Body & Architecture Syntax</label>
+              <textarea id="studioMarkdown" rows="6" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 font-mono text-[11px] focus:outline-none focus:border-emerald-500">
 ### Executive Summary
 Resolving transactional drift during high-load Safaricom STK Push webhooks.
 
@@ -276,20 +540,107 @@ graph LR
     Safaricom -->|Webhook| ConsultKenyaAPI
     ConsultKenyaAPI -->|Redis Mutex| EscrowLedger
 ```
-            </textarea>
+              </textarea>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 font-semibold mb-1">Proof Artifact Attachment (Audit Memo or Repo)</label>
+              <input type="text" id="studioArtifact" value="https://github.com/KenyaConsult/audit-memo.pdf" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-slate-300 font-mono text-[11px]" />
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-slate-300 font-semibold mb-1">Proof Artifact Attachment</label>
-              <input type="text" value="https://github.com/KenyaConsult/audit-memo.pdf" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-300" />
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button onclick="saveStudioDraft()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition">
+              Save Local Draft
+            </button>
+            <button onclick="publishStudioBrief()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold text-xs hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/20 transition flex items-center gap-2">
+              <i data-lucide="check" class="w-4 h-4"></i> Publish to Authority Network
+            </button>
+          </div>
+        </div>
+
+        <!-- VIEW B: MY PUBLISHED CASE STUDIES & DRAFTS -->
+        <div id="studioPublishedView" class="hidden space-y-4">
+          <!-- Portfolio Metrics Tiles -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <span class="text-slate-400 text-[10px]">Published Decks</span>
+              <div class="text-lg font-extrabold text-white mt-0.5" id="metricPublishedCount">2 Live</div>
             </div>
-            <div>
-              <label class="block text-slate-300 font-semibold mb-1">Advisory Rate (KES)</label>
-              <input type="number" value="15000" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-300 font-mono" />
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <span class="text-slate-400 text-[10px]">Total Dwell / Reads</span>
+              <div class="text-lg font-extrabold text-emerald-400 mt-0.5">5,270 views</div>
+            </div>
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <span class="text-slate-400 text-[10px]">Consultations Won</span>
+              <div class="text-lg font-extrabold text-cyan-400 mt-0.5">42 Bookings</div>
+            </div>
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <span class="text-slate-400 text-[10px]">CAS Score Boost</span>
+              <div class="text-lg font-extrabold text-amber-400 mt-0.5">+205 Pts</div>
+            </div>
+          </div>
+
+          <!-- Authored Items List -->
+          <div class="space-y-3" id="publishedDecksContainer">
+            <!-- Card 1 -->
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE ON NETWORK</span>
+                    <span class="text-[10px] text-slate-400">Fintech Payment Rails</span>
+                  </div>
+                  <h3 class="text-sm font-bold text-white mt-1">High-Throughput Escrow Ledger Reconciliation on AWS ECS</h3>
+                  <p class="text-xs text-slate-300 mt-1">Safaricom Daraja APIv2 webhook concurrency resolution with distributed Redis locks.</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <span class="text-xs font-bold text-emerald-400">KES 15,000</span>
+                  <div class="text-[10px] text-slate-500">per 45m</div>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div class="flex items-center gap-3">
+                  <span><i data-lucide="eye" class="w-3.5 h-3.5 inline text-slate-400 mr-1"></i> 1,420 views</span>
+                  <span><i data-lucide="bookmark" class="w-3.5 h-3.5 inline text-emerald-400 mr-1"></i> 68 saves</span>
+                  <span><i data-lucide="calendar" class="w-3.5 h-3.5 inline text-cyan-400 mr-1"></i> 14 bookings</span>
+                </div>
+                <button onclick="navigateTo('discover')" class="text-emerald-400 hover:underline font-semibold flex items-center gap-1">
+                  View in Feed <i data-lucide="external-link" class="w-3 h-3"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE ON NETWORK</span>
+                    <span class="text-[10px] text-slate-400">Corporate Tax & eTIMS</span>
+                  </div>
+                  <h3 class="text-sm font-bold text-white mt-1">eTIMS Phase 2 Core-Banking Middleware Integration</h3>
+                  <p class="text-xs text-slate-300 mt-1">Zero-loss asynchronous queue topology resolving KES 40M statutory exposure.</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <span class="text-xs font-bold text-emerald-400">KES 15,000</span>
+                  <div class="text-[10px] text-slate-500">per 45m</div>
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                <div class="flex items-center gap-3">
+                  <span><i data-lucide="eye" class="w-3.5 h-3.5 inline text-slate-400 mr-1"></i> 3,850 views</span>
+                  <span><i data-lucide="bookmark" class="w-3.5 h-3.5 inline text-emerald-400 mr-1"></i> 142 saves</span>
+                  <span><i data-lucide="calendar" class="w-3.5 h-3.5 inline text-cyan-400 mr-1"></i> 28 bookings</span>
+                </div>
+                <button onclick="navigateTo('discover')" class="text-emerald-400 hover:underline font-semibold flex items-center gap-1">
+                  View in Feed <i data-lucide="external-link" class="w-3 h-3"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -346,11 +697,15 @@ graph LR
           <div>
             <h2 class="text-lg font-bold text-white">David Mutiso</h2>
             <p class="text-xs text-slate-400">Chief Technology Officer • Apex Financial SME</p>
-            <span class="inline-block mt-1 px-2.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">Verified Corporate Buyer</span>
+            <div class="flex flex-wrap gap-2 mt-1">
+              <span class="px-2.5 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">Verified Corporate Client</span>
+              <span class="px-2.5 py-0.5 rounded text-[10px] bg-cyan-500/10 text-cyan-400 font-bold border border-cyan-500/20">ODPC Compliant Entity</span>
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 text-xs">
+        <!-- Creator & Buyer Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
             <span class="text-slate-400 text-[10px]">Total Escrows Completed</span>
             <div class="text-lg font-bold text-white mt-1">12 Sessions</div>
@@ -359,14 +714,45 @@ graph LR
             <span class="text-slate-400 text-[10px]">Total Tax Withheld (5%)</span>
             <div class="text-lg font-bold text-emerald-400 mt-1">KES 14,500</div>
           </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 col-span-2 sm:col-span-1">
+            <span class="text-slate-400 text-[10px]">Creator Authority (CAS)</span>
+            <div class="text-lg font-bold text-amber-400 mt-1">880 / 1000</div>
+          </div>
         </div>
 
+        <!-- Authored Portfolio Preview in Profile -->
+        <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+              <i data-lucide="book-marked" class="w-4 h-4 text-emerald-400"></i> My Authored Studio Publications (2)
+            </h4>
+            <button onclick="navigateTo('studio'); switchStudioTab('published');" class="text-emerald-400 text-[11px] font-bold hover:underline">Manage All</button>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">High-Throughput Escrow Ledger Reconciliation on AWS ECS</span>
+                <p class="text-[10px] text-slate-400">Fintech Payment Rails • 1,420 views</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE</span>
+            </div>
+            <div class="p-2.5 bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">eTIMS Phase 2 Core-Banking Middleware Integration</span>
+                <p class="text-[10px] text-slate-400">Corporate Tax & eTIMS • 3,850 views</p>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
         <div class="space-y-2 text-xs">
-          <button onclick="alert('Viewing eTIMS QR-coded Tax Receipts archive.')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-left font-medium flex items-center justify-between">
+          <button onclick="showToast('Downloading annual eTIMS Tax Withholding Dossier (PDF).')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-left font-medium flex items-center justify-between transition">
             <span>Download Annual eTIMS Tax Invoices</span>
             <i data-lucide="download" class="w-4 h-4 text-slate-400"></i>
           </button>
-          <button onclick="alert('Consult Kenya Support WhatsApp Line: +254 700 000 000')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-left font-medium flex items-center justify-between">
+          <button onclick="alert('Consult Kenya Support Helpline: +254 700 000 000 | support@consultkenya.co.ke')" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-left font-medium flex items-center justify-between transition">
             <span>Platform Support & Dispute Helpdesk</span>
             <i data-lucide="help-circle" class="w-4 h-4 text-slate-400"></i>
           </button>
@@ -447,7 +833,214 @@ graph LR
   <script>
     lucide.createIcons();
 
-    // 1. Bottom Navigation Router
+    // ========================================================
+    // 1. TOPIC HUBS DATA DICTIONARY & DIRECTORY
+    // ========================================================
+    const topicHubsData = {
+      conveyancing: {
+        title: "Commercial Conveyancing & Land Law",
+        description: "Ardhisasa digital title resolution, Sectional Properties Act 2020 transition, stamp duty structuring, and title verification.",
+        framework: "Land Registration Act 2012 • Sectional Properties Act 2020 • MoLPP",
+        icon: "map-pin",
+        color: "emerald",
+        subtopics: ["#ArdhisasaSearch", "#SectionalTitles", "#StampDutyPlanning", "#NLCApprovals", "#SuccessionProbate"],
+        advisors: [
+          { name: "Adv. Mutua James", title: "LSK High Court Advocate • Conveyancing Lead", cas: "920", rate: "10,000", badge: "LSK Certified", initials: "MJ" },
+          { name: "Faith Waweru", title: "Partner, Commercial Real Estate & Sectional Titles", cas: "935", rate: "14,000", badge: "High Court Bar", initials: "FW" },
+          { name: "Brian Kipchumba", title: "Senior Land Surveyor & NLIS Digital Mapper", cas: "890", rate: "8,500", badge: "ISK Registered", initials: "BK" },
+          { name: "Patricia Otieno", title: "Corporate Succession & Estate Planning Counsel", cas: "905", rate: "12,000", badge: "LSK Member", initials: "PO" }
+        ],
+        discussions: [
+          {
+            id: 1,
+            author: "Kamau N.",
+            title: "Ardhisasa Pre-1990 LR Search Delays in Nairobi Registry: Practical Workarounds?",
+            content: "We have an ongoing acquisition of a commercial parcel along Mombasa Road with a 1982 Title deed. Ardhisasa says 'Pending Digitization'. How do we expedite safely?",
+            replies: 14,
+            upvotes: 38,
+            expertAnswer: "Adv. Mutua James: You can file Form LRA 4 at Survey of Kenya alongside the original deed plan for priority re-indexing within 5 business days."
+          },
+          {
+            id: 2,
+            author: "Apex Developers",
+            title: "Converting Long-Term Sub-Leases to Sectional Titles: Bank Charge Implications",
+            content: "We have 120 residential units under 99-year sub-leases. With the statutory deadline, does the mother bank charge automatically transfer to individual sectional titles?",
+            replies: 9,
+            upvotes: 27,
+            expertAnswer: "Faith Waweru: Under Section 13(2) of the Sectional Properties Act 2020, the encumbrance endorses proportionally onto the new sectional registers."
+          },
+          {
+            id: 3,
+            author: "Amina G.",
+            title: "Stamp Duty Exemptions on Corporate Group Restructuring under Section 96",
+            content: "What documentation does the Collector of Stamp Duties demand to qualify for the 0% group transfer exemption in Kenya?",
+            replies: 6,
+            upvotes: 18,
+            expertAnswer: "Proof of 90%+ beneficial common ownership for at least 3 years prior to the transfer deed execution."
+          }
+        ],
+        studies: [
+          {
+            title: "Transitioning a 140-Unit Kilimani Complex to Sectional Titles (Ardhisasa Case Study)",
+            author: "Faith Waweru",
+            summary: "Executed full conversion under the 2020 Act without interrupting 6 commercial bank charges.",
+            stat: "Outcome: 100% individual deeds issued in 90 days"
+          },
+          {
+            title: "De-risking Industrial Land Acquisition in Mavoko (Overlapping Allotments)",
+            author: "Adv. Mutua James",
+            summary: "Conducted historical chain-of-title reconstructive audit neutralizing KES 80M double-allocation risk.",
+            stat: "Outcome: Clean gazetted rectification"
+          }
+        ],
+        regulatory: [
+          { title: "Statutory Stamp Duty Rates", body: "Urban Municipalities: 4% of market valuation. Rural / Agricultural: 2% of market valuation. Form LRA 33 required." },
+          { title: "Ardhisasa NLIS Mandatory Rule", body: "All Nairobi County conveyancing transactions must execute digitally via NLIS portal with dual biometric authentication." },
+          { title: "Rates & Rent Clearance Protocol", body: "Nairobi City County unified rates clearance certificate must be validated within 30 days prior to transfer registration." }
+        ]
+      },
+
+      tax: {
+        title: "Corporate Tax, eTIMS & KRA Compliance",
+        description: "KRA eTIMS APIv2 middleware, withholding tax (WHT) structuring, transfer pricing and audit defense.",
+        framework: "Tax Procedures Act 2015 • Income Tax Act Cap 470 • Finance Act 2026",
+        icon: "receipt",
+        color: "cyan",
+        subtopics: ["#eTIMSIntegration", "#WithholdingTax", "#KRAAuditDefense", "#TransferPricing", "#VATReconciliation"],
+        advisors: [
+          { name: "Dr. Beatrice Muthoni", title: "ICPAK Fellow • Former KRA Large Taxpayer Director", cas: "960", rate: "12,500", badge: "ICPAK Fellow", initials: "BM" },
+          { name: "Wanjiku Karanja", title: "Chief Cloud & Tax Systems Architect", cas: "940", rate: "15,000", badge: "ICPAK Certified", initials: "WK" },
+          { name: "Dennis Omondi", title: "Corporate Tax Litigator & TAT Defense Counsel", cas: "915", rate: "18,000", badge: "LSK Tax Bar", initials: "DO" },
+          { name: "Sheila Chebet", title: "VAT & Cross-Border Customs Consultant", cas: "885", rate: "11,000", badge: "Tax Advisor", initials: "SC" }
+        ],
+        discussions: [
+          {
+            id: 101,
+            author: "Fintech CTO",
+            title: "eTIMS API Failure Fallback: Handling Offline Invoices Without Incurring 2x Penalties",
+            content: "When KRA's eTIMS endpoint experiences downtime, how can high-frequency B2B transactions maintain valid tax compliance?",
+            replies: 18,
+            upvotes: 54,
+            expertAnswer: "Wanjiku Karanja: Implement an offline queuing buffer with signed hash payloads that auto-reconcile within 24 hours under KRA Circular No. 4."
+          },
+          {
+            id: 102,
+            author: "CFO Kenya Ltd",
+            title: "5% WHT for Professional Software Consultancy Services vs 16% VAT Reverse Charge",
+            content: "Are foreign SaaS licenses treated as management/professional fees subject to 20% non-resident WHT or 5% resident rate?",
+            replies: 12,
+            upvotes: 41,
+            expertAnswer: "Dr. Beatrice Muthoni: In absence of a Double Taxation Agreement (DTA), non-resident digital services default to 20% WHT alongside 16% reverse VAT."
+          }
+        ],
+        studies: [
+          {
+            title: "eTIMS Phase 2 Core-Banking Middleware Integration",
+            author: "Wanjiku Karanja",
+            summary: "Architected zero-loss async queue topology processing 150,000 daily fiscal invoices.",
+            stat: "Outcome: 99.99% statutory uptime"
+          },
+          {
+            title: "Tax Appeals Tribunal Defense on Disallowed Expenses (KES 85M)",
+            author: "Dr. Beatrice Muthoni",
+            summary: "Successfully demonstrated commercial nexus of distributed software R&D expenditures.",
+            stat: "Outcome: 100% tax assessment vacated"
+          }
+        ],
+        regulatory: [
+          { title: "Mandatory 5% Withholding Tax", body: "Professional, management, and training fees paid to resident consultants attract 5% WHT remitted by the 20th of the following month." },
+          { title: "eTIMS QR Code Validation", body: "Every valid deductible invoice must bear a cryptographically signed control unit code and scannable QR code." }
+        ]
+      },
+
+      fintech: {
+        title: "Fintech Payment Rails & Open Banking",
+        description: "Safaricom Daraja APIv2 integration, CBK PSP licensing, escrow trust accounts, and double-entry ledger reconciliation.",
+        framework: "National Payment System Act 2011 • CBK Prudential Guidelines • POCAMLA",
+        icon: "cpu",
+        color: "amber",
+        subtopics: ["#DarajaSTKPush", "#CBKLicensing", "#EscrowTrustLedger", "#OpenBankingAPIs", "#AMLCompliance"],
+        advisors: [
+          { name: "Eng. Kamau Otieno", title: "Principal Payment Systems & Switch Engineer", cas: "950", rate: "20,000", badge: "EBK Registered", initials: "KO" },
+          { name: "Mercy Chepkemoi", title: "Fintech Compliance & CBK Regulatory Lead", cas: "925", rate: "16,000", badge: "Compliance Fellow", initials: "MC" },
+          { name: "Victor Kiprotich", title: "Distributed Systems & Ledger Architect", cas: "910", rate: "15,000", badge: "Fintech Architect", initials: "VK" }
+        ],
+        discussions: [
+          {
+            id: 201,
+            author: "Lead Dev",
+            title: "Safaricom Daraja STK Push Callback Timeout: Idempotent Redis Mutex Handling",
+            content: "Users double-click when STK Push takes longer than 15 seconds. What is the recommended idempotency window for B2C/C2B in Daraja APIv2?",
+            replies: 22,
+            upvotes: 67,
+            expertAnswer: "Eng. Kamau Otieno: Enforce a 900-second TTL mutex on `CheckoutRequestID` and acknowledge webhooks in under 200ms before asynchronous database write."
+          },
+          {
+            id: 202,
+            author: "Startup Founder",
+            title: "CBK Payment Service Provider (PSP) Tier 2 Capital Requirements & Trust Safeguarding",
+            content: "What is the minimum paid-up capital required for a payment aggregation license in Kenya in 2026?",
+            replies: 11,
+            upvotes: 33,
+            expertAnswer: "Mercy Chepkemoi: Tier 2 aggregators require KES 20M paid-up capital, plus segregated commercial bank trust accounts."
+          }
+        ],
+        studies: [
+          {
+            title: "High-Throughput Escrow Ledger Reconciliation on AWS ECS",
+            author: "Eng. Kamau Otieno",
+            summary: "Zero transactional drift across 250,000 monthly escrow milestone releases.",
+            stat: "Outcome: 99.999% ledger accuracy"
+          }
+        ],
+        regulatory: [
+          { title: "CBK Trust Segregation Rules", body: "All client escrow funds must be deposited in segregated trust accounts held with Tier-1 commercial banks regulated by CBK." },
+          { title: "POCAMLA KYC Requirements", body: "Every transaction exceeding KES 1,000,000 must undergo Level 3 source-of-funds verification." }
+        ]
+      },
+
+      dataprotection: {
+        title: "Data Protection, ODPC Audits & Privacy",
+        description: "Office of Data Protection Commissioner registration, DPIAs, cross-border health & financial data transfers, and ISO 27001.",
+        framework: "Data Protection Act 2019 • ODPC Regulations 2021 • CMCA 2018",
+        icon: "lock",
+        color: "purple",
+        subtopics: ["#ODPCRegistration", "#DPIAAssessment", "#CrossBorderTransfer", "#ISO27001", "#PrivacyByDesign"],
+        advisors: [
+          { name: "Fiona Ndinda", title: "Certified Data Protection Officer & Privacy Attorney", cas: "930", rate: "15,000", badge: "ODPC Accredited", initials: "FN" },
+          { name: "Kevin Barasa", title: "Lead Cybersecurity Assessor & Pen-Tester", cas: "910", rate: "17,500", badge: "CISSP Certified", initials: "KB" }
+        ],
+        discussions: [
+          {
+            id: 301,
+            author: "HealthTech Lead",
+            title: "ODPC Enforcement on AWS / Azure Cloud Regions Outside Kenya: Legality of Health Records",
+            content: "Can patient clinical data be stored in AWS Cape Town region (af-south-1) under Section 48 cross-border transfer rules?",
+            replies: 15,
+            upvotes: 46,
+            expertAnswer: "Fiona Ndinda: Yes, provided South Africa has proven comparable data protection adequacy and you execute an ODPC-compliant Data Transfer Agreement (DTA)."
+          }
+        ],
+        studies: [
+          {
+            title: "Enterprise Healthcare Group ODPC Remediation & Cross-Border Audit",
+            author: "Fiona Ndinda",
+            summary: "Achieved full ODPC Data Controller & Processor certification for 4 hospital chains in 60 days.",
+            stat: "Outcome: Zero statutory penalties"
+          }
+        ],
+        regulatory: [
+          { title: "ODPC Statutory Registration Thresholds", body: "Organizations with annual turnover over KES 5M or processing more than 50 data subjects must register with the ODPC." },
+          { title: "Breach Notification Mandate", body: "Data breaches must be formally reported to the Data Protection Commissioner within 72 hours of identification." }
+        ]
+      }
+    };
+
+    let activeHubKey = "conveyancing";
+
+    // ========================================================
+    // 2. BOTTOM NAVIGATION ROUTER
+    // ========================================================
     function navigateTo(tabName) {
       const sections = ['discover', 'hubs', 'studio', 'escrow', 'profile'];
       sections.forEach(s => {
@@ -475,7 +1068,338 @@ graph LR
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    // 2. Discover Mode Switcher (Stream vs Bento)
+    // ========================================================
+    // 3. PROFILE DROPDOWN MENU LOGIC
+    // ========================================================
+    let isConsultantMode = false;
+
+    function toggleProfileDropdown(event) {
+      if (event) event.stopPropagation();
+      const dd = document.getElementById('profileDropdown');
+      dd.classList.toggle('hidden');
+    }
+
+    function closeProfileDropdown() {
+      const dd = document.getElementById('profileDropdown');
+      if (dd) dd.classList.add('hidden');
+    }
+
+    // Close dropdown on outside click
+    window.addEventListener('click', function(e) {
+      const dd = document.getElementById('profileDropdown');
+      const btn = document.getElementById('profileDropdownBtn');
+      if (dd && !dd.contains(e.target) && e.target !== btn) {
+        dd.classList.add('hidden');
+      }
+    });
+
+    function toggleUserRole() {
+      isConsultantMode = !isConsultantMode;
+      const roleBadge = document.getElementById('roleBadge');
+      const switchBtn = document.getElementById('switchRoleBtn');
+      
+      if (isConsultantMode) {
+        roleBadge.className = 'inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20';
+        roleBadge.innerText = 'Consultant Mode';
+        switchBtn.innerText = 'Switch to Client';
+        showToast("Switched to Consultant Mode: Studio and Escrow payout features active!");
+      } else {
+        roleBadge.className = 'inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+        roleBadge.innerText = 'Client Mode';
+        switchBtn.innerText = 'Switch to Consultant';
+        showToast("Switched to Client Mode: Discovery and Direct Booking active!");
+      }
+      closeProfileDropdown();
+    }
+
+    function signOutUser() {
+      closeProfileDropdown();
+      showToast("Signed out David Mutiso session. Redirecting to login...");
+    }
+
+    // ========================================================
+    // 4. TOPIC HUB DETAIL VIEW & INTERACTIONS
+    // ========================================================
+    function openHubDetail(hubKey) {
+      activeHubKey = hubKey;
+      const data = topicHubsData[hubKey];
+      if (!data) return;
+
+      // Update Hub Header Information
+      document.getElementById('hubDetailTitle').innerText = data.title;
+      document.getElementById('hubDetailDescription').innerText = data.description;
+      document.getElementById('hubDetailFramework').innerHTML = `<i data-lucide="scale" class="w-3 h-3 text-amber-400"></i> ` + data.framework;
+      document.getElementById('hubAdvisorsCount').innerText = data.advisors.length;
+      document.getElementById('hubDiscussionsCount').innerText = data.discussions.length;
+
+      // Render Sub-topics chips
+      const subtopicsContainer = document.getElementById('hubSubtopics');
+      subtopicsContainer.innerHTML = data.subtopics.map(t => 
+        `<span class="px-2.5 py-1 rounded-full bg-slate-950 text-slate-300 border border-slate-800 font-medium cursor-pointer hover:border-emerald-500/60 transition">${t}</span>`
+      ).join('');
+
+      // Render Advisors List
+      renderHubAdvisors(data.advisors);
+
+      // Render Discussions List
+      renderHubDiscussions(data.discussions);
+
+      // Render Case Studies
+      renderHubStudies(data.studies);
+
+      // Render Regulatory Compendium
+      renderHubRegulatory(data.regulatory);
+
+      // Reset to default sub-tab
+      switchHubInnerTab('advisors');
+
+      // Open Modal
+      document.getElementById('hubDetailModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeHubDetail() {
+      document.getElementById('hubDetailModal').classList.add('hidden');
+    }
+
+    function switchHubInnerTab(tab) {
+      const tabs = ['advisors', 'discussions', 'studies', 'regulatory'];
+      tabs.forEach(t => {
+        const view = document.getElementById('hubInnerView-' + t);
+        const btn = document.getElementById('hubTabBtn-' + t);
+        if (view) view.classList.add('hidden');
+        if (btn) {
+          btn.className = 'pb-2.5 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition';
+        }
+      });
+
+      const activeView = document.getElementById('hubInnerView-' + tab);
+      const activeBtn = document.getElementById('hubTabBtn-' + tab);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.className = 'pb-2.5 border-b-2 border-emerald-500 text-emerald-400 flex items-center gap-1.5 transition';
+      }
+      lucide.createIcons();
+    }
+
+    function renderHubAdvisors(advisors) {
+      const container = document.getElementById('hubAdvisorsList');
+      container.innerHTML = advisors.map(adv => `
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center font-extrabold text-white text-base flex-shrink-0">
+              ${adv.initials}
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-white">${adv.name}</h4>
+                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">${adv.badge}</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">${adv.title}</p>
+              <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-500 font-medium">
+                <span>CAS Score: <strong class="text-white">${adv.cas}</strong></span>
+                <span>•</span>
+                <span class="text-emerald-400 font-semibold">100% Escrow Delivery</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-0 border-slate-800">
+            <div class="sm:text-right">
+              <span class="text-xs font-extrabold text-white">KES ${adv.rate}</span>
+              <span class="block text-[10px] text-slate-400">per 45m</span>
+            </div>
+            <button onclick="closeHubDetail(); openBookingModal('${adv.name}', '${adv.rate}');" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center gap-1.5 shadow-md">
+              <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Book Advisory
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHubDiscussions(discussions) {
+      const container = document.getElementById('hubDiscussionsList');
+      container.innerHTML = discussions.map(d => `
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                <span class="font-bold text-white">${d.author}</span>
+                <span>•</span>
+                <span>Community Question</span>
+              </div>
+              <h4 class="font-bold text-sm text-white">${d.title}</h4>
+              <p class="text-xs text-slate-300 leading-relaxed">${d.content}</p>
+            </div>
+            <button onclick="upvoteQuestion(${d.id})" class="flex flex-col items-center px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-slate-400 hover:text-emerald-400 transition flex-shrink-0">
+              <i data-lucide="chevron-up" class="w-4 h-4"></i>
+              <span class="text-[10px] font-bold" id="upvoteCount-${d.id}">${d.upvotes}</span>
+            </button>
+          </div>
+          ${d.expertAnswer ? `
+            <div class="p-3 rounded-lg bg-emerald-950/20 border border-emerald-800/40 text-xs space-y-1">
+              <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Verified Authority Resolution
+              </span>
+              <p class="text-slate-200 leading-relaxed">${d.expertAnswer}</p>
+            </div>
+          ` : ''}
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+            <span><i data-lucide="message-circle" class="w-3.5 h-3.5 inline mr-1 text-slate-500"></i> ${d.replies} Technical Responses</span>
+            <span class="text-emerald-400 hover:underline cursor-pointer font-medium" onclick="showToast('Thread discussion details')">Join Thread</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHubStudies(studies) {
+      const container = document.getElementById('hubCaseStudiesList');
+      container.innerHTML = studies.map(s => `
+        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5">
+          <div class="flex items-start justify-between">
+            <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Verified Architectural Deck</span>
+            <span class="text-[10px] text-slate-400">Author: <strong>${s.author}</strong></span>
+          </div>
+          <h4 class="font-bold text-sm text-white">${s.title}</h4>
+          <p class="text-xs text-slate-300">${s.summary}</p>
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+            <span class="text-emerald-400 font-bold">${s.stat}</span>
+            <button onclick="closeHubDetail(); navigateTo('discover');" class="text-slate-400 hover:text-white font-semibold flex items-center gap-1">
+              View Architectural Spec <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHubRegulatory(regulatory) {
+      const container = document.getElementById('hubRegulatoryContent');
+      container.innerHTML = regulatory.map(r => `
+        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+          <h4 class="font-bold text-white text-xs flex items-center gap-1.5">
+            <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i> ${r.title}
+          </h4>
+          <p class="text-slate-300 leading-relaxed">${r.body}</p>
+        </div>
+      `).join('');
+    }
+
+    function postHubQuestion() {
+      const input = document.getElementById('newQuestionInput');
+      const val = input.value.trim();
+      if (!val) {
+        showToast("Please enter your question before posting.");
+        return;
+      }
+
+      const currentHub = topicHubsData[activeHubKey];
+      const newId = Date.now();
+      currentHub.discussions.unshift({
+        id: newId,
+        author: "David Mutiso (You)",
+        title: val,
+        content: "Question submitted to verified specialists in " + currentHub.title + ". Waiting for authority review.",
+        replies: 0,
+        upvotes: 1,
+        expertAnswer: null
+      });
+
+      input.value = "";
+      renderHubDiscussions(currentHub.discussions);
+      document.getElementById('hubDiscussionsCount').innerText = currentHub.discussions.length;
+      lucide.createIcons();
+      showToast("Question posted to " + currentHub.title + "! Specialists notified.");
+    }
+
+    function upvoteQuestion(id) {
+      const el = document.getElementById('upvoteCount-' + id);
+      if (el) {
+        let count = parseInt(el.innerText) + 1;
+        el.innerText = count;
+        showToast("Upvoted! Priority boosted in authority ranking.");
+      }
+    }
+
+    // ========================================================
+    // 5. CREATION STUDIO TAB SWITCHING & PUBLISHING
+    // ========================================================
+    function switchStudioTab(tab) {
+      const composeView = document.getElementById('studioComposeView');
+      const publishedView = document.getElementById('studioPublishedView');
+      const btnCompose = document.getElementById('studioTabBtn-compose');
+      const btnPublished = document.getElementById('studioTabBtn-published');
+
+      if (tab === 'compose') {
+        composeView.classList.remove('hidden');
+        publishedView.classList.add('hidden');
+        btnCompose.className = 'px-3.5 py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition flex items-center gap-1.5';
+        btnPublished.className = 'px-3.5 py-1.5 rounded-lg font-bold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+      } else {
+        composeView.classList.add('hidden');
+        publishedView.classList.remove('hidden');
+        btnPublished.className = 'px-3.5 py-1.5 rounded-lg font-bold bg-emerald-500 text-slate-950 transition flex items-center gap-1.5';
+        btnCompose.className = 'px-3.5 py-1.5 rounded-lg font-bold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5';
+      }
+      lucide.createIcons();
+    }
+
+    let publishedCount = 2;
+    function publishStudioBrief() {
+      const title = document.getElementById('studioTitle').value.trim();
+      const rate = document.getElementById('studioRate').value;
+      const hubSelect = document.getElementById('studioHubSelect');
+      const hubName = hubSelect.options[hubSelect.selectedIndex].text;
+
+      if (!title) {
+        showToast("Please provide a title for your case study.");
+        return;
+      }
+
+      publishedCount++;
+      document.getElementById('studioPublishedBadgeCount').innerText = publishedCount;
+      document.getElementById('metricPublishedCount').innerText = publishedCount + " Live";
+
+      // Prepend to published list
+      const container = document.getElementById('publishedDecksContainer');
+      const newCard = document.createElement('div');
+      newCard.className = 'p-4 rounded-xl bg-slate-950 border border-emerald-500/50 space-y-3 transition transform animate-pulse';
+      newCard.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">JUST PUBLISHED</span>
+              <span class="text-[10px] text-slate-400">${hubName}</span>
+            </div>
+            <h3 class="text-sm font-bold text-white mt-1">${title}</h3>
+            <p class="text-xs text-slate-300 mt-1">Verified case study authored by David Mutiso.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="text-xs font-bold text-emerald-400">KES ${parseInt(rate).toLocaleString()}</span>
+            <div class="text-[10px] text-slate-500">per 45m</div>
+          </div>
+        </div>
+        <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+          <div class="flex items-center gap-3">
+            <span><i data-lucide="eye" class="w-3.5 h-3.5 inline text-slate-400 mr-1"></i> 1 view</span>
+            <span><i data-lucide="bookmark" class="w-3.5 h-3.5 inline text-emerald-400 mr-1"></i> 0 saves</span>
+            <span><i data-lucide="calendar" class="w-3.5 h-3.5 inline text-cyan-400 mr-1"></i> Available</span>
+          </div>
+          <span class="text-emerald-400 font-semibold">Active on Discovery Feed</span>
+        </div>
+      `;
+      container.insertBefore(newCard, container.firstChild);
+      setTimeout(() => newCard.classList.remove('animate-pulse'), 2000);
+
+      showToast("Successfully published '" + title.substring(0, 30) + "...' to the Network!");
+      switchStudioTab('published');
+    }
+
+    function saveStudioDraft() {
+      showToast("Draft saved locally. Will not appear in public feed until published.");
+    }
+
+    // ========================================================
+    // 6. DISCOVER MODE SWITCHER (STREAM VS BENTO)
+    // ========================================================
     function switchStreamMode(mode) {
       const v = document.getElementById('viewVertical');
       const b = document.getElementById('viewBento');
@@ -495,10 +1419,12 @@ graph LR
       }
     }
 
-    // 3. Booking Modal Controls
+    // ========================================================
+    // 7. BOOKING & ESCROW ACTIONS
+    // ========================================================
     let currentBookingPrice = "15,000";
     function openBookingModal(name, price) {
-      if (name) document.getElementById('modalConsultantName').innerText = "with " + name;
+      if (name) document.getElementById('modalConsultantName').innerText = "with " + name + " (Tier 3 Specialist)";
       if (price) {
         currentBookingPrice = price;
         document.getElementById('modalPayButton').innerText = "Authorize M-Pesa STK Push (KES " + price + ")";
@@ -530,14 +1456,6 @@ graph LR
       showToast("M-Pesa STK Push dispatched to " + phone + "! Enter PIN on handset.");
     }
 
-    // 4. Studio Actions
-    function publishStudioBrief() {
-      const title = document.getElementById('studioTitle').value;
-      showToast("Published '" + title.substring(0, 30) + "...' to Authority Network!");
-      setTimeout(() => navigateTo('discover'), 1200);
-    }
-
-    // 5. Escrow Actions
     function approveMilestoneDeliverable(ref, amount) {
       const wht = amount * 0.05;
       const fee = amount * 0.07;
@@ -552,7 +1470,6 @@ graph LR
       }
     }
 
-    // 6. Interactive Helpers
     function toggleBookmark(btnId) {
       const btn = document.getElementById(btnId);
       if (btn.classList.contains('text-emerald-400')) {
@@ -562,10 +1479,6 @@ graph LR
         btn.classList.add('text-emerald-400');
         showToast("Saved to Bookmarks Board (5x CAS weight applied)!");
       }
-    }
-
-    function filterTopicTag(tag) {
-      showToast("Filtering discovery feed for #" + tag);
     }
 
     function toggleNotifications() {
